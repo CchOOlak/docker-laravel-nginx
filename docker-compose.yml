@@ -1,0 +1,17 @@
+version: '2'
+services:
+  php:
+    build: ./web
+    volumes:
+      - ./web/project:/var/www/html
+  nginx:
+    build: ./sites
+    ports:
+      - "8080:80"
+    links:
+      - php
+    volumes_from:
+      - php
+    volumes:
+      - ./sites/site.conf:/etc/nginx/conf.d/default.conf
+      - ./sites/nginx.conf:/etc/nginx/nginx.conf
